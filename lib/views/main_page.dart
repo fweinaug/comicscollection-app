@@ -1,3 +1,4 @@
+import 'package:comics_app/router.dart';
 import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:flutter/material.dart' hide Card;
@@ -140,7 +141,9 @@ class ComicList extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
       itemCount: 4,
       itemBuilder: (context, index) {
-        return ComicTile();
+        return ComicTile(
+          onTap: () => Router.showComic(),
+        );
       },
       separatorBuilder: (context, index) => SizedBox(height: 10.0),
     );
@@ -148,6 +151,10 @@ class ComicList extends StatelessWidget {
 }
 
 class ComicTile extends StatelessWidget {
+  const ComicTile({Key key, this.onTap}) : super(key: key);
+
+  final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -155,7 +162,7 @@ class ComicTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(3.0),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: () {},
+          onTap: onTap,
           child: Row(
             children: <Widget>[
               Padding(

@@ -1,3 +1,4 @@
+import 'package:comics_app/router.dart';
 import 'package:comics_app/views/main_page.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class ComicApp extends StatelessWidget {
         fontFamily: 'Helvetica Neue',
         scaffoldBackgroundColor: Color(0xFFECECEC),
       ),
+      navigatorKey: Router.navigatorKey,
       home: MainPage(),
     );
   }
