@@ -35,6 +35,9 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  assets:
+    - assets/icons/
+
   fonts:
     - family: Helvetica Neue
       fonts:
