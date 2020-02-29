@@ -7,8 +7,9 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="comics_app"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Comics"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_rounded">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
