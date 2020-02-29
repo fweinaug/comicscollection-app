@@ -26,6 +26,8 @@ class Router {
   static void showIssue() {
     showModalBottomSheet(context: _navigator.overlay.context,
       builder: (_) => IssueOverlay(),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
     );
   }
 }

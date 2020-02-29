@@ -136,7 +136,7 @@ class Issues extends StatelessWidget {
                       borderRadius: BorderRadius.circular(3.0),
                       clipBehavior: Clip.antiAlias,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () => Router.showIssue(),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[

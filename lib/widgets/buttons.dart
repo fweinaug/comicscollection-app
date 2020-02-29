@@ -12,11 +12,11 @@ class BackButton extends StatelessWidget {
       child: InkWell(
         onTap: () => Navigator.pop(context),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           child: SvgPicture.asset(
             'assets/icons/back.svg',
-            width: 13.5,
-            height: 10.0,
+            width: 13.0,
+            height: 13.0,
             color: Color(0xFF777777),
           ),
         ),
@@ -36,11 +36,11 @@ class CloseButton extends StatelessWidget {
       child: InkWell(
         onTap: () => Navigator.pop(context),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           child: SvgPicture.asset(
             'assets/icons/close.svg',
-            width: 10.5,
-            height: 10.5,
+            width: 15.0,
+            height: 15.0,
             color: Color(0xFF777777),
           ),
         ),
@@ -60,11 +60,11 @@ class ReadButton extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
+          padding: const EdgeInsets.fromLTRB(10.0, 11.0, 10.0, 9.0),
           child: SvgPicture.asset(
             'assets/icons/check.svg',
-            width: 14.0,
-            height: 11.0,
+            width: 15.0,
+            height: 15.0,
             color: Color(0xFF3AB88B),
           ),
         ),
