@@ -158,6 +158,7 @@ class ComicTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      padding: EdgeInsets.all(0.0),
       child: Material(
         borderRadius: BorderRadius.circular(3.0),
         clipBehavior: Clip.antiAlias,
