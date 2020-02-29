@@ -18,6 +18,8 @@ class Router {
   static void showPublisher() {
     showModalBottomSheet(context: _navigator.overlay.context,
       builder: (_) => PublisherOverlay(),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
     );
   }
 

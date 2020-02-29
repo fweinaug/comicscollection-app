@@ -1,3 +1,4 @@
+import 'package:comics_app/router.dart';
 import 'package:comics_app/widgets/buttons.dart';
 import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
@@ -214,12 +215,15 @@ class Details extends StatelessWidget {
               color: Color(0xFF676767),
             ),
           ),
-          Text(
-            'Publisher',
-            style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
-              decoration: TextDecoration.underline,
+          GestureDetector(
+            onTap: () => Router.showPublisher(),
+            child: Text(
+              'Publisher',
+              style: TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.w600,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
           SizedBox(height: 10.0),

@@ -25,6 +25,30 @@ class BackButton extends StatelessWidget {
   }
 }
 
+class CloseButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Color(0xFFECECEC),
+      elevation: 1.0,
+      shape: CircleBorder(),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => Navigator.pop(context),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+          child: SvgPicture.asset(
+            'assets/icons/close.svg',
+            width: 10.5,
+            height: 10.5,
+            color: Color(0xFF777777),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class ReadButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
