@@ -1,52 +1,65 @@
+import 'package:comics_app/models/comic.dart';
+import 'package:comics_app/models/issue.dart';
 import 'package:comics_app/router.dart';
 import 'package:comics_app/widgets/buttons.dart';
 import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:comics_app/widgets/line.dart';
 import 'package:flutter/material.dart' hide Card, BackButton;
+import 'package:provider/provider.dart';
 
 class ComicPage extends StatelessWidget {
+  const ComicPage(
+    this.comic, {
+    Key key,
+  }) : super(key: key);
+
+  final Comic comic;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Header(),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 10.0),
-                  child: Issues(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 20.0),
-                  child: IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Expanded(
-                          child: Creators(),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                        Expanded(
-                          child: Details(),
-                        ),
-                      ],
+    return Provider.value(
+      value: comic,
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Header(),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 10.0),
+                    child: Issues(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 20.0),
+                    child: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Expanded(
+                            child: Creators(),
+                          ),
+                          SizedBox(
+                            width: 20.0,
+                          ),
+                          Expanded(
+                            child: Details(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Positioned(
-            left: 15.0,
-            top: 15.0 + MediaQuery.of(context).padding.top,
-            child: BackButton(),
-          ),
-        ],
+            Positioned(
+              left: 15.0,
+              top: 15.0 + MediaQuery.of(context).padding.top,
+              child: BackButton(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -55,6 +68,8 @@ class ComicPage extends StatelessWidget {
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final comic = Provider.of<Comic>(context);
+
     return Stack(
       children: <Widget>[
         Positioned.fill(
@@ -75,7 +90,7 @@ class Header extends StatelessWidget {
               ),
               child: Card(
                 child: Text(
-                  'COMIC TITLE',
+                  comic.name.toUpperCase(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Helvetica Neue Condensed',
@@ -97,6 +112,8 @@ class Header extends StatelessWidget {
 class Issues extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final comic = Provider.of<Comic>(context);
+
     return Card(
       child: Column(
         children: <Widget>[
@@ -110,10 +127,11 @@ class Issues extends StatelessWidget {
                   fontFamily: 'Helvetica Neue Condensed',
                   fontSize: 18.0,
                   fontWeight: FontWeight.w800,
+                  letterSpacing: 0.4,
                 ),
               ),
               Text(
-                '0 / 4',
+                '${comic.issuesRead} / ${comic.issuesTotal}',
                 style: TextStyle(
                   fontSize: 10.0,
                 ),
@@ -125,47 +143,65 @@ class Issues extends StatelessWidget {
             shrinkWrap: true,
             primary: false,
             padding: EdgeInsets.all(0.0),
-            itemCount: 4,
+            itemCount: comic.issues.length,
             itemBuilder: (context, index) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: Material(
-                      type: MaterialType.transparency,
-                      borderRadius: BorderRadius.circular(3.0),
-                      clipBehavior: Clip.antiAlias,
-                      child: InkWell(
-                        onTap: () => Router.showIssue(),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Cover(),
-                            SizedBox(width: 9.0),
-                            Text(
-                              'Title',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: ReadButton(),
-                  ),
-                ],
+              return IssueTile(
+                issue: comic.issues[index],
               );
             },
             separatorBuilder: (context, index) => SizedBox(height: 8),
           ),
         ],
       ),
+    );
+  }
+}
+
+class IssueTile extends StatelessWidget {
+  const IssueTile({
+    Key key,
+    this.issue,
+  }) : super(key: key);
+
+  final Issue issue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: Material(
+            type: MaterialType.transparency,
+            borderRadius: BorderRadius.circular(3.0),
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: () => Router.showIssue(Provider.of<Comic>(context, listen: false), issue),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Cover(
+                    height: 60.0,
+                  ),
+                  SizedBox(width: 9.0),
+                  Text(
+                    issue.title,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: ReadButton(),
+        ),
+      ],
     );
   }
 }
@@ -183,6 +219,7 @@ class Creators extends StatelessWidget {
               fontFamily: 'Helvetica Neue Condensed',
               fontSize: 18.0,
               fontWeight: FontWeight.w800,
+              letterSpacing: 0.4,
             ),
           ),
           Line(),
@@ -195,6 +232,8 @@ class Creators extends StatelessWidget {
 class Details extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final comic = Provider.of<Comic>(context);
+
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,6 +244,7 @@ class Details extends StatelessWidget {
               fontFamily: 'Helvetica Neue Condensed',
               fontSize: 18.0,
               fontWeight: FontWeight.w800,
+              letterSpacing: 0.4,
             ),
           ),
           Line(),
@@ -216,9 +256,9 @@ class Details extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Router.showPublisher(),
+            onTap: () => Router.showPublisher(comic.publisher),
             child: Text(
-              'Publisher',
+              comic.publisher.name,
               style: TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w600,
@@ -235,7 +275,7 @@ class Details extends StatelessWidget {
             ),
           ),
           Text(
-            '4 / 4',
+            '${comic.issuesCount} / ${comic.issuesTotal}',
             style: TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.w600,

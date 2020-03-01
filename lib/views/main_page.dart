@@ -1,8 +1,11 @@
+import 'package:comics_app/models/comic.dart';
 import 'package:comics_app/router.dart';
+import 'package:comics_app/stores/comic_store.dart';
 import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:flutter/material.dart' hide Card;
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -137,12 +140,14 @@ class _MenuButtonState extends State<MenuButton> {
 class ComicList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final comics = Provider.of<ComicStore>(context).comics;
+
     return ListView.separated(
       padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
-      itemCount: 4,
+      itemCount: comics.length,
       itemBuilder: (context, index) {
         return ComicTile(
-          onTap: () => Router.showComic(),
+          comic: comics[index],
         );
       },
       separatorBuilder: (context, index) => SizedBox(height: 10.0),
@@ -151,9 +156,12 @@ class ComicList extends StatelessWidget {
 }
 
 class ComicTile extends StatelessWidget {
-  const ComicTile({Key key, this.onTap}) : super(key: key);
+  const ComicTile({
+    Key key,
+    this.comic,
+  }) : super(key: key);
 
-  final VoidCallback onTap;
+  final Comic comic;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +171,7 @@ class ComicTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(3.0),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: onTap,
+          onTap: () => Router.showComic(comic),
           child: Row(
             children: <Widget>[
               Padding(
@@ -175,7 +183,7 @@ class ComicTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Title',
+                      comic.name,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 14.0,
@@ -192,7 +200,7 @@ class ComicTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Publisher',
+                      comic.publisher.name,
                       style: TextStyle(
                         fontSize: 12.0,
                       ),

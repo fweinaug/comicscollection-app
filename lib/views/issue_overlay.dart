@@ -1,3 +1,5 @@
+import 'package:comics_app/models/comic.dart';
+import 'package:comics_app/models/issue.dart';
 import 'package:comics_app/widgets/buttons.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:comics_app/widgets/line.dart';
@@ -6,6 +8,15 @@ import 'package:flutter/material.dart' hide CloseButton;
 import 'package:flutter_svg/flutter_svg.dart';
 
 class IssueOverlay extends StatelessWidget {
+  const IssueOverlay(
+    this.comic,
+    this.issue, {
+      Key key,
+  }) : super(key: key);
+
+  final Comic comic;
+  final Issue issue;
+
   @override
   Widget build(BuildContext context) {
     return ModalOverlay(
@@ -33,15 +44,16 @@ class IssueOverlay extends StatelessWidget {
                           CloseButton(),
                         ],
                       ),
+                      SizedBox(height: 10.0),
                       Text(
-                        'Comic',
+                        comic.name,
                         style: TextStyle(
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                           fontWeight: FontWeight.w200,
                         ),
                       ),
                       Text(
-                        'Title',
+                        issue.title,
                         style: TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w800,
@@ -56,13 +68,10 @@ class IssueOverlay extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Line(),
-                Column(
-                  children: <Widget>[
-                    Text('This is a short summary of this issue. It can be very long so we have to make sure it gets wrapped into multiple lines. This is a short summary of this issue. It can be very long so we have to make sure it gets wrapped into multiple lines.'),
-                  ],
-                ),
+                Text(issue.summary),
                 SizedBox(height: 15.0),
                 Row(
                   children: <Widget>[

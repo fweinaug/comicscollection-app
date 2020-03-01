@@ -14,6 +14,8 @@ class Publisher {
   final DateTime createdAt;
   final DateTime updatedAt;
 
+  final String websiteDomain;
+
   Publisher({
     this.id,
     this.name,
@@ -22,7 +24,7 @@ class Publisher {
     this.website,
     this.createdAt,
     this.updatedAt,
-  });
+  }) : websiteDomain = website != null ? Uri.parse(website).host : null;
 
   factory Publisher.fromJson(Map<String, dynamic> json) => _$PublisherFromJson(json);
 }
