@@ -31,6 +31,15 @@ abstract class _Comic with Store {
   DateTime createdAt;
   DateTime updatedAt;
 
+  @computed
+  bool get finished => issuesRead == issuesCount;
+
+  @computed
+  bool get reading => issuesRead > 0 && issuesRead < issuesTotal;
+
+  @computed
+  double get progress => issuesCount > 0 ? issuesRead / issuesCount : 0.0;
+
   @action
   void markIssueAsRead(Issue issue) {
     issue.read = false;

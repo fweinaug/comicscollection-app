@@ -10,6 +10,8 @@ class ComicStore = _ComicStoreBase with _$ComicStore;
 abstract class _ComicStoreBase with Store {
   ObservableList<Comic> comics = ObservableList<Comic>();
 
+  int issuesCount;
+
   _ComicStoreBase() {
     comics.add(Comic()
       ..name = 'Southern Bastards'
@@ -41,6 +43,8 @@ abstract class _ComicStoreBase with Store {
           ..read = false,
       ],
     );
+
+    issuesCount = comics.fold(0, (count, comic) => count += comic.issuesCount);
   }
 
   void toggleRead(Issue issue) {

@@ -27,6 +27,8 @@ class MainPage extends StatelessWidget {
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final issuesCount = Provider.of<ComicStore>(context).issuesCount;
+
     return Ink(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -56,7 +58,7 @@ class Header extends StatelessWidget {
                       height: 12.0,
                     ),
                     Text(
-                      '9',
+                      issuesCount.toString(),
                       style: TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w200,
@@ -220,14 +222,53 @@ class ComicTile extends StatelessWidget {
                   ],
                 ),
               ),
-              Ink(
+              ComicProgress(
+                comic: comic,
                 width: 5.0,
                 height: 86.0,
-                color: Color(0xFFECECEC),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ComicProgress extends StatelessWidget {
+  const ComicProgress({
+    Key key,
+    @required this.comic,
+    @required this.width,
+    @required this.height,
+  }) : assert(comic != null),
+       assert(width != null && width > 0),
+       assert(height != null && height > 0),
+       super(key: key);
+
+  final Comic comic;
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (_) => Stack(
+        children: <Widget>[
+          Ink(
+            width: width,
+            height: height,
+            color: comic.finished ? Color(0xFF3AB88B).withOpacity(comic.concluded ? 1.0 : 0.5) : Color(0xFFECECEC),
+          ),
+          if (comic.reading) Positioned(
+            bottom: 0.0,
+            child: Ink(
+              width: width,
+              height: height * comic.progress,
+              color: Color(0xFFFFCD35),
+            ),
+          ),
+        ],
       ),
     );
   }
