@@ -37,7 +37,9 @@ class IssueOverlay extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          ReadButton(),
+                          ReadButton(
+                            issue: issue,
+                          ),
                           SizedBox(width: 8.0),
                           EditButton(),
                           SizedBox(width: 8.0),

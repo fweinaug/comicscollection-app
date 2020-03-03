@@ -6,6 +6,7 @@ import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:comics_app/widgets/line.dart';
 import 'package:flutter/material.dart' hide Card, BackButton;
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class ComicPage extends StatelessWidget {
@@ -130,10 +131,12 @@ class Issues extends StatelessWidget {
                   letterSpacing: 0.4,
                 ),
               ),
-              Text(
-                '${comic.issuesRead} / ${comic.issuesTotal}',
-                style: TextStyle(
-                  fontSize: 10.0,
+              Observer(
+                builder: (_) => Text(
+                  '${comic.issuesRead} / ${comic.issuesTotal}',
+                  style: TextStyle(
+                    fontSize: 10.0,
+                  ),
                 ),
               ),
             ],
@@ -199,7 +202,9 @@ class IssueTile extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 5.0),
-          child: ReadButton(),
+          child: ReadButton(
+            issue: issue,
+          ),
         ),
       ],
     );

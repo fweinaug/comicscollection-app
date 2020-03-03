@@ -4,6 +4,7 @@ import 'package:comics_app/stores/comic_store.dart';
 import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:flutter/material.dart' hide Card;
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -208,10 +209,12 @@ class ComicTile extends StatelessWidget {
                     SizedBox(
                       height: 14.0,
                     ),
-                    Text(
-                      '0 / 4',
-                      style: TextStyle(
-                        fontSize: 10.0,
+                    Observer(
+                      builder: (_) => Text(
+                        '${comic.issuesRead} / ${comic.issuesCount}',
+                        style: TextStyle(
+                          fontSize: 10.0,
+                        ),
                       ),
                     ),
                   ],
