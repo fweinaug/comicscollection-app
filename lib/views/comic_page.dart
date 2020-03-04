@@ -273,6 +273,8 @@ class IssueTile extends StatelessWidget {
 class Creators extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final comic = Provider.of<Comic>(context);
+
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,8 +289,57 @@ class Creators extends StatelessWidget {
             ),
           ),
           Line(),
+          _buildList(comic.creators),
         ],
       ),
+    );
+  }
+
+  _buildList(List<Creator> creators) {
+    if (creators == null || creators.isEmpty) {
+      return Expanded(
+        child: Center(
+          child: Container(
+            width: 30.0,
+            height: 3.0,
+            color: Color(0xFFD6D6D6),
+          ),
+        ),
+      );
+    }  
+
+    final list = List<Widget>();
+
+    for (var i = 0; i < creators.length; ++i) {
+      final creator = creators[i];
+
+      list.add(Wrap(
+        direction: Axis.vertical,
+        spacing: 1.0,
+        children: <Widget>[
+          Text(
+            creator.person.name,
+            style: TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            creator.contribution,
+            style: TextStyle(
+              fontSize: 12.0,
+              fontWeight: FontWeight.w200,
+              color: Color(0xFF676767),
+            ),
+          ),
+        ],
+      ));
+    }
+
+    return Wrap(
+      direction: Axis.vertical,
+      spacing: 10.0,
+      children: list,
     );
   }
 }

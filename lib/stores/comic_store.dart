@@ -1,5 +1,6 @@
 import 'package:comics_app/models/comic.dart';
 import 'package:comics_app/models/issue.dart';
+import 'package:comics_app/models/person.dart';
 import 'package:comics_app/models/publisher.dart';
 import 'package:mobx/mobx.dart';
 
@@ -26,7 +27,11 @@ abstract class _ComicStoreBase with Store {
           ..title = 'Secret'
           ..summary = 'Summary'
           ..read = false,
-      ],
+      ]
+      ..creators = [
+        Creator(person: Person(name: 'Jonathan Hickman'), contribution: 'Writer'),
+        Creator(person: Person(name: 'Ryan Bodenheim'), contribution: 'Art'),
+      ]
     );
     comics.add(Comic()
       ..name = 'Southern Bastards'
