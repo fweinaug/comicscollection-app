@@ -5,6 +5,7 @@ import 'package:comics_app/widgets/buttons.dart';
 import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:comics_app/widgets/line.dart';
+import 'package:comics_app/widgets/text.dart';
 import 'package:flutter/material.dart' hide Card, BackButton;
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,9 @@ class ComicPage extends StatelessWidget {
                   Header(),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 10.0),
-                    child: Issues(),
+                    child: Builder(
+                      builder: (context) => comic.series ? Issues() : SingleIssue(),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 20.0),
@@ -160,6 +163,62 @@ class Issues extends StatelessWidget {
   }
 }
 
+class SingleIssue extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final issue = Provider.of<Comic>(context).issues.first;
+
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Cover(),
+              SizedBox(width: 9.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        ReadButton(
+                          issue: issue,
+                        ),
+                        SizedBox(width: 8.0),
+                        EditButton(),
+                      ],
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      issue.title,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Line(),
+              Text(issue.summary),
+              SizedBox(height: 25.0),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
 class IssueTile extends StatelessWidget {
   const IssueTile({
     Key key,
@@ -253,68 +312,25 @@ class Details extends StatelessWidget {
             ),
           ),
           Line(),
-          Text(
-            'Publisher:',
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Color(0xFF676767),
-            ),
-          ),
-          GestureDetector(
+          LabeledText(
+            label: 'Publisher:',
+            text: comic.publisher.name,
             onTap: () => Router.showPublisher(comic.publisher),
-            child: Text(
-              comic.publisher.name,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w600,
-                decoration: TextDecoration.underline,
-              ),
-            ),
+          ),
+          if (comic.series) SizedBox(height: 10.0),
+          if (comic.series) LabeledText(
+            label: 'Series:',
+            text: '${comic.issuesCount} / ${comic.issuesTotal}',
           ),
           SizedBox(height: 10.0),
-          Text(
-            'Series:',
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Color(0xFF676767),
-            ),
-          ),
-          Text(
-            '${comic.issuesCount} / ${comic.issuesTotal}',
-            style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
-            ),
+          LabeledText(
+            label: comic.series ? 'Years:' : 'Released:',
+            text: comic.series ? '2014 – 2018' : 'May 6, 2015',
           ),
           SizedBox(height: 10.0),
-          Text(
-            'Years:',
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Color(0xFF676767),
-            ),
-          ),
-          Text(
-            '2014 – 2018',
-            style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(height: 10.0),
-          Text(
-            'Added:',
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Color(0xFF676767),
-            ),
-          ),
-          Text(
-            'April 12, 2018',
-            style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
-            ),
+          LabeledText(
+            label: 'Added:',
+            text: 'April 12, 2018',
           ),
         ],
       ),

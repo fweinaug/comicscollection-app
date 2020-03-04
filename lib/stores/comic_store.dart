@@ -14,6 +14,21 @@ abstract class _ComicStoreBase with Store {
 
   _ComicStoreBase() {
     comics.add(Comic()
+      ..name = 'Secret'
+      ..publisher = Publisher(name: 'Image', description: 'Description', website: 'https://imagecomics.com')
+      ..issuesCount = 1
+      ..issuesTotal = 1
+      ..concluded = true
+      ..issuesRead = 0
+      ..issues = [
+        Issue()
+          ..number = 1
+          ..title = 'Secret'
+          ..summary = 'Summary'
+          ..read = false,
+      ],
+    );
+    comics.add(Comic()
       ..name = 'Southern Bastards'
       ..publisher = Publisher(name: 'Image', description: 'Description', website: 'https://imagecomics.com')
       ..issuesCount = 4

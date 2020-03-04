@@ -95,3 +95,27 @@ class _ReadButtonState extends State<ReadButton> {
     );
   }
 }
+
+class EditButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Color(0xFFECECEC),
+      elevation: 1.0,
+      shape: CircleBorder(),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {},
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+          child: SvgPicture.asset(
+            'assets/icons/text.svg',
+            width: 15.0,
+            height: 15.0,
+            color: Color(0xFF777777),
+          ),
+        ),
+      ),
+    );
+  }
+}

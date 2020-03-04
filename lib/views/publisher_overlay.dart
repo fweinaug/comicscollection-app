@@ -2,6 +2,7 @@ import 'package:comics_app/models/publisher.dart';
 import 'package:comics_app/widgets/buttons.dart';
 import 'package:comics_app/widgets/line.dart';
 import 'package:comics_app/widgets/overlay.dart';
+import 'package:comics_app/widgets/text.dart';
 import 'package:flutter/material.dart' hide CloseButton;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,23 +49,10 @@ class PublisherOverlay extends StatelessWidget {
                     SizedBox(
                       height: 16.0,
                     ),
-                    Text(
-                      'Website:',
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Color(0xFF676767),
-                      ),
-                    ),
-                    GestureDetector(
+                    LabeledText(
+                      label: 'Website:',
+                      text: publisher.websiteDomain,
                       onTap: () => _launchUrl(publisher.website),
-                      child: Text(
-                        publisher.websiteDomain,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
                     ),
                   ],
                 ),

@@ -31,6 +31,8 @@ abstract class _Comic with Store {
   DateTime createdAt;
   DateTime updatedAt;
 
+  bool get series => issuesCount > 1 || issuesTotal > 1 || !concluded;
+
   @computed
   bool get finished => issuesRead == issuesCount;
 
