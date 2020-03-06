@@ -5,6 +5,7 @@ import 'package:comics_app/widgets/buttons.dart';
 import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:comics_app/widgets/line.dart';
+import 'package:comics_app/widgets/summary.dart';
 import 'package:comics_app/widgets/text.dart';
 import 'package:flutter/material.dart' hide Card, BackButton;
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -212,7 +213,7 @@ class SingleIssue extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Line(),
-              Text(issue.summary),
+              Summary(issue.summary),
               SizedBox(height: 25.0),
             ],
           ),
@@ -221,7 +222,6 @@ class SingleIssue extends StatelessWidget {
     );
   }
 }
-
 
 class IssueTile extends StatelessWidget {
   const IssueTile({
