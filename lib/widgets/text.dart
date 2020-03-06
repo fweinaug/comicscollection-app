@@ -5,6 +5,7 @@ class LabeledText extends StatelessWidget {
     Key key,
     @required this.label,
     @required this.text,
+    this.extra,
     this.onTap,
   }) : assert(label != null),
        assert(text != null),
@@ -12,6 +13,7 @@ class LabeledText extends StatelessWidget {
 
   final String label;
   final String text;
+  final String extra;
   final VoidCallback onTap;
 
   @override
@@ -32,13 +34,25 @@ class LabeledText extends StatelessWidget {
   }
 
   _buildText() {
-    final child = Text(
-      text,
-      style: TextStyle(
-        fontSize: 14.0,
-        fontWeight: FontWeight.w500,
-        decoration: onTap != null ? TextDecoration.underline : null,
-      ),
+    final child = Wrap(
+      spacing: 5.0,
+      crossAxisAlignment: WrapCrossAlignment.end,
+      children: <Widget>[
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 14.0,
+            fontWeight: FontWeight.w500,
+            decoration: onTap != null ? TextDecoration.underline : null,
+          ),
+        ),
+        if (extra != null && extra.isNotEmpty) Text('($extra)',
+          style: TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.w200,
+          ),
+        ),
+      ],
     );
 
     if (onTap != null) {
