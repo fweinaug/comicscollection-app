@@ -1,4 +1,6 @@
+import 'package:comics_app/models/comic.dart';
 import 'package:comics_app/models/issue.dart';
+import 'package:comics_app/router.dart';
 import 'package:comics_app/stores/comic_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -97,6 +99,17 @@ class _ReadButtonState extends State<ReadButton> {
 }
 
 class EditButton extends StatelessWidget {
+  const EditButton({
+    Key key,
+    @required this.comic,
+    @required this.issue,
+  }) : assert(comic != null),
+       assert(issue != null),
+       super(key: key);
+
+  final Comic comic;
+  final Issue issue;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -105,7 +118,7 @@ class EditButton extends StatelessWidget {
       shape: CircleBorder(),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {},
+        onTap: () => Router.editIssue(comic, issue),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           child: SvgPicture.asset(

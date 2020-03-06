@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  animations: ^1.0.0+5
   flutter_mobx: ^1.0.1
   flutter_svg: ^0.17.2
   json_annotation: ^3.0.1

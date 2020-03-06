@@ -41,7 +41,10 @@ class IssueOverlay extends StatelessWidget {
                             issue: issue,
                           ),
                           SizedBox(width: 8.0),
-                          EditButton(),
+                          EditButton(
+                            comic: comic,
+                            issue: issue,
+                          ),
                           SizedBox(width: 8.0),
                           CloseButton(),
                         ],

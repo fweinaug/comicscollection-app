@@ -166,7 +166,8 @@ class Issues extends StatelessWidget {
 class SingleIssue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final issue = Provider.of<Comic>(context).issues.first;
+    final comic = Provider.of<Comic>(context);
+    final issue = comic.issues.first;
 
     return Card(
       child: Column(
@@ -188,7 +189,10 @@ class SingleIssue extends StatelessWidget {
                           issue: issue,
                         ),
                         SizedBox(width: 8.0),
-                        EditButton(),
+                        EditButton(
+                          comic: comic,
+                          issue: issue,
+                        ),
                       ],
                     ),
                     SizedBox(height: 25.0),
