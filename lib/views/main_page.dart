@@ -211,8 +211,8 @@ class ComicTile extends StatelessWidget {
                       SizedBox(
                         height: 2.0,
                       ),
-                      Text(
-                        'Creator',
+                      if (comic.creators != null && comic.creators.isNotEmpty) Text(
+                        comic.creators.first.person.name,
                         style: TextStyle(
                           fontSize: 12.0,
                         ),
