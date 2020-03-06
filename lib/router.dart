@@ -54,7 +54,7 @@ class Router {
 
     showModal<void>(
       context: _navigator.overlay.context,
-      configuration: FadeScaleTransitionConfiguration(),
+      configuration: FadeScaleTransitionConfiguration(barrierDismissible: false),
       builder: (BuildContext context) => EditSummaryDialog(comic, issue),
     ).whenComplete(() {
       if (openIssue) {
