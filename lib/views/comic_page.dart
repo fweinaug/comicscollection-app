@@ -137,7 +137,7 @@ class Issues extends StatelessWidget {
               ),
               Observer(
                 builder: (_) => Text(
-                  '${comic.issuesRead} / ${comic.issuesTotal}',
+                  '${comic.issuesRead} / ${comic.issuesCount}',
                   style: TextStyle(
                     fontSize: 10.0,
                   ),
