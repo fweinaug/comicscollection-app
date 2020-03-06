@@ -1,6 +1,7 @@
+import 'package:animations/animations.dart';
 import 'package:comics_app/models/comic.dart';
-import 'package:comics_app/router.dart';
 import 'package:comics_app/stores/comic_store.dart';
+import 'package:comics_app/views/comic_page.dart';
 import 'package:comics_app/widgets/card.dart';
 import 'package:comics_app/widgets/cover.dart';
 import 'package:flutter/material.dart' hide Card;
@@ -149,8 +150,16 @@ class ComicList extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
       itemCount: comics.length,
       itemBuilder: (context, index) {
-        return ComicTile(
-          comic: comics[index],
+        final comic = comics[index];
+
+        return OpenContainer(
+          transitionType: ContainerTransitionType.fadeThrough,
+          openBuilder: (context, _) => ComicPage(comic),
+          closedBuilder: (context, openContainer) => ComicTile(
+            comic: comic,
+            onTap: openContainer,
+          ),
+          tappable: false,
         );
       },
       separatorBuilder: (context, index) => SizedBox(height: 10.0),
@@ -161,10 +170,13 @@ class ComicList extends StatelessWidget {
 class ComicTile extends StatelessWidget {
   const ComicTile({
     Key key,
-    this.comic,
-  }) : super(key: key);
+    @required this.comic,
+    this.onTap,
+  }) : assert(comic != null),
+       super(key: key);
 
   final Comic comic;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -174,53 +186,57 @@ class ComicTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(3.0),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: () => Router.showComic(comic),
+          onTap: onTap,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(3.0, 3.0, 10.0, 3.0),
-                child: Cover(),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      comic.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 2.0,
-                    ),
-                    Text(
-                      'Creator',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                      ),
-                    ),
-                    Text(
-                      comic.publisher.name,
-                      style: TextStyle(
-                        fontSize: 12.0,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 14.0,
-                    ),
-                    Observer(
-                      builder: (_) => Text(
-                        '${comic.issuesRead} / ${comic.issuesCount}',
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(3.0, 3.0, 10.0, 3.0),
+                    child: Cover(),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        comic.name,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 10.0,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                      SizedBox(
+                        height: 2.0,
+                      ),
+                      Text(
+                        'Creator',
+                        style: TextStyle(
+                          fontSize: 12.0,
+                        ),
+                      ),
+                      Text(
+                        comic.publisher.name,
+                        style: TextStyle(
+                          fontSize: 12.0,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.0,
+                      ),
+                      Observer(
+                        builder: (_) => Text(
+                          '${comic.issuesRead} / ${comic.issuesCount}',
+                          style: TextStyle(
+                            fontSize: 10.0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               ComicProgress(
                 comic: comic,
