@@ -84,7 +84,7 @@ class Header extends StatelessWidget {
             imageUrl: comic.image.imageUrl,
             fit: BoxFit.cover,
             color: Colors.black.withOpacity(0.35),
-            colorBlendMode: BlendMode.overlay,
+            colorBlendMode: BlendMode.darken,
           ),
         ),
         Align(
