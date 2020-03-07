@@ -10,7 +10,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Comics"
+        android:label="Comics Collection"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_rounded">
         <activity

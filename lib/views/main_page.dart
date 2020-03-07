@@ -7,6 +7,7 @@ import 'package:comics_app/widgets/cover.dart';
 import 'package:flutter/material.dart' hide Card;
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_version/get_version.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatelessWidget {
@@ -138,7 +139,13 @@ class _MenuButtonState extends State<MenuButton> {
     );
 
     if (selectedItem == 'about') {
-      showAboutDialog(context: context);
+      showAboutDialog(
+        context: context,
+        applicationName: await GetVersion.appName,
+        applicationVersion: await GetVersion.projectVersion,
+        applicationIcon: Image.asset('assets/images/logo_accent.png', width: 35.0),
+        applicationLegalese: 'Developed by Florian Weinaug',
+      );
     }
   }
 }
