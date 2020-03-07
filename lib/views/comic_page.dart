@@ -196,7 +196,7 @@ class SingleIssue extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 25.0),
+                    SizedBox(height: 45.0),
                     Text(
                       issue.title,
                       style: TextStyle(

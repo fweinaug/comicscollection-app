@@ -195,7 +195,9 @@ class ComicTile extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(3.0, 3.0, 10.0, 3.0),
-                    child: Cover(),
+                    child: Cover(
+                      height: 80.0,
+                    ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

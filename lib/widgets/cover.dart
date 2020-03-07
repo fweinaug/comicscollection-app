@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class Cover extends StatelessWidget {
   const Cover({
     Key key,
-    this.height = 80.0,
   }) : super(key: key);
+    this.height = 100.0,
 
   final double height;
 

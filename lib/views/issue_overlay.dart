@@ -50,7 +50,7 @@ class IssueOverlay extends StatelessWidget {
                           CloseButton(),
                         ],
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: 30.0),
                       Text(
                         comic.name,
                         style: TextStyle(
