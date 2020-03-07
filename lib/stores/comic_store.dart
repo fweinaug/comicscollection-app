@@ -38,12 +38,31 @@ abstract class _ComicStoreBase with Store {
     issuesCount = comics.fold(0, (count, comic) => count += comic.issuesCount);
   }
 
-  void toggleRead(Issue issue) {
-    final comic = comics.firstWhere((comic) => comic.issues.contains(issue));
-
+  @action
+  Future toggleRead(Issue issue) async {
     if (issue.read) {
-      comic.markIssueAsRead(issue);
+      await _markIssueAsUnread(issue);
     } else {
+      await _markIssueAsRead(issue);
+    }
+  }
+
+  Future _markIssueAsRead(Issue issue) async {
+    final updated = await webService.updateIssueSettings(issue, true);
+
+    if (updated) {
+      final comic = comics.firstWhere((comic) => comic.issues.contains(issue));
+
+      comic.markIssueAsRead(issue);
+    }
+  }
+
+  Future _markIssueAsUnread(Issue issue) async {
+    final updated = await webService.updateIssueSettings(issue, false);
+
+    if (updated) {
+      final comic = comics.firstWhere((comic) => comic.issues.contains(issue));
+
       comic.markIssueAsUnread(issue);
     }
   }

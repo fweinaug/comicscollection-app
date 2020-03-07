@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:comics_app/models/comic.dart';
 import 'package:comics_app/models/issue.dart';
 import 'package:dio/dio.dart';
@@ -20,6 +22,16 @@ class WebService {
 
     final comics = await _client.getComics(cacheOptions);
     return comics;
+  }
+
+  Future<bool> updateIssue(Issue issue, String summary) async {
+    final response = await _client.updateIssue(issue.id, summary);
+    return response?.response?.statusCode == HttpStatus.ok;
+  }
+
+  Future<bool> updateIssueSettings(Issue issue, bool read) async {
+    final response = await _client.updateIssueSettings(issue.id, read ? 1 : 0);
+    return response?.response?.statusCode == HttpStatus.ok;
   }
 
   static _createClient() {
@@ -45,9 +57,9 @@ abstract class RestClient {
 
   @PATCH('/issues/{id}')
   @FormUrlEncoded()
-  Future<Issue> updateIssue(@Path() int id, @Field() String summary);
+  Future<HttpResponse<Issue>> updateIssue(@Path() int id, @Field() String summary);
 
   @PUT('/issues/{id}/settings')
   @FormUrlEncoded()
-  Future<Issue> updateIssueSettings(@Path() int id, @Field() bool read);
+  Future<HttpResponse<Issue>> updateIssueSettings(@Path() int id, @Field() int read);
 }

@@ -44,16 +44,16 @@ abstract class _Comic with Store {
 
   @action
   void markIssueAsRead(Issue issue) {
-    issue.read = false;
+    issue.read = true;
 
-    --issuesRead;
+    ++issuesRead;
   }
 
   @action
   void markIssueAsUnread(Issue issue) {
-    issue.read = true;
+    issue.read = false;
 
-    ++issuesRead;
+    --issuesRead;
   }
 }
 
