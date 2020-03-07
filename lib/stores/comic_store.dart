@@ -1,7 +1,6 @@
 import 'package:comics_app/models/comic.dart';
 import 'package:comics_app/models/issue.dart';
-import 'package:comics_app/models/person.dart';
-import 'package:comics_app/models/publisher.dart';
+import 'package:comics_app/services/web_service.dart';
 import 'package:mobx/mobx.dart';
 
 part 'comic_store.g.dart';
@@ -9,61 +8,33 @@ part 'comic_store.g.dart';
 class ComicStore = _ComicStoreBase with _$ComicStore;
 
 abstract class _ComicStoreBase with Store {
+  final WebService webService;
+
   ObservableList<Comic> comics = ObservableList<Comic>();
 
-  int issuesCount;
+  @observable
+  int issuesCount = 0;
 
-  _ComicStoreBase() {
-    comics.add(Comic()
-      ..name = 'Secret'
-      ..publisher = Publisher(name: 'Image', description: 'Description', website: 'https://imagecomics.com')
-      ..issuesCount = 1
-      ..issuesTotal = 1
-      ..concluded = true
-      ..issuesRead = 0
-      ..issues = [
-        Issue()
-          ..number = 1
-          ..title = 'Secret'
-          ..summary = 'Summary'
-          ..read = false,
-      ]
-      ..creators = [
-        Creator(person: Person(name: 'Jonathan Hickman'), contribution: 'Writer'),
-        Creator(person: Person(name: 'Ryan Bodenheim'), contribution: 'Art'),
-      ]
-    );
-    comics.add(Comic()
-      ..name = 'Southern Bastards'
-      ..publisher = Publisher(name: 'Image', description: 'Description', website: 'https://imagecomics.com')
-      ..issuesCount = 4
-      ..issuesTotal = 4
-      ..concluded = true
-      ..issuesRead = 0
-      ..issues = [
-        Issue()
-          ..number = 1
-          ..title = 'Vol. 1: Here Was A Man'
-          ..summary = 'Summary'
-          ..read = false,
-        Issue()
-          ..number = 2
-          ..title = 'Vol. 2: Gridiron'
-          ..summary = 'Summary'
-          ..read = false,
-        Issue()
-          ..number = 3
-          ..title = 'Vol. 3: Homecoming'
-          ..summary = 'Summary'
-          ..read = false,
-        Issue()
-          ..number = 4
-          ..title = 'Vol. 4: Gut Check'
-          ..summary = 'Summary'
-          ..read = false,
-      ],
-    );
+  @computed
+  FutureStatus get initializeStatus => _initializeFuture.status;
 
+  ObservableFuture _initializeFuture;
+
+  _ComicStoreBase(this.webService) {
+    _initializeFuture = ObservableFuture(initialize());
+  }
+
+  Future initialize() async {
+    await Future.wait([
+      _loadComics(),
+      Future.delayed(Duration(milliseconds: 1000)),
+    ]);
+  }
+
+  Future _loadComics() async {
+    final loadedComics = await webService.getComics();
+
+    comics.addAll(loadedComics);
     issuesCount = comics.fold(0, (count, comic) => count += comic.issuesCount);
   }
 

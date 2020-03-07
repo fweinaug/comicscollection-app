@@ -29,7 +29,9 @@ class IssueOverlay extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Cover(),
+                Cover(
+                  imageUrl: issue.image.thumbnailUrl,
+                ),
                 SizedBox(width: 9.0),
                 Expanded(
                   child: Column(

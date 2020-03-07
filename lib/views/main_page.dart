@@ -28,7 +28,7 @@ class MainPage extends StatelessWidget {
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final issuesCount = Provider.of<ComicStore>(context).issuesCount;
+    final store = Provider.of<ComicStore>(context);
 
     return Ink(
       decoration: BoxDecoration(
@@ -58,12 +58,14 @@ class Header extends StatelessWidget {
                       width: 11.0,
                       height: 12.0,
                     ),
-                    Text(
-                      issuesCount.toString(),
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w200,
-                        color: Color(0xFF676767),
+                    Observer(
+                      builder: (context) => Text(
+                        store.issuesCount.toString(),
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w200,
+                          color: Color(0xFF676767),
+                        ),
                       ),
                     ),
                   ],
@@ -144,25 +146,27 @@ class _MenuButtonState extends State<MenuButton> {
 class ComicList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final comics = Provider.of<ComicStore>(context).comics;
+    final store = Provider.of<ComicStore>(context);
 
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
-      itemCount: comics.length,
-      itemBuilder: (context, index) {
-        final comic = comics[index];
+    return Observer(
+      builder: (context) => ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
+        itemCount: store.comics.length,
+        itemBuilder: (context, index) {
+          final comic = store.comics[index];
 
-        return OpenContainer(
-          transitionType: ContainerTransitionType.fadeThrough,
-          openBuilder: (context, _) => ComicPage(comic),
-          closedBuilder: (context, openContainer) => ComicTile(
-            comic: comic,
-            onTap: openContainer,
-          ),
-          tappable: false,
-        );
-      },
-      separatorBuilder: (context, index) => SizedBox(height: 10.0),
+          return OpenContainer(
+            transitionType: ContainerTransitionType.fadeThrough,
+            openBuilder: (context, _) => ComicPage(comic),
+            closedBuilder: (context, openContainer) => ComicTile(
+              comic: comic,
+              onTap: openContainer,
+            ),
+            tappable: false,
+          );
+        },
+        separatorBuilder: (context, index) => SizedBox(height: 10.0),
+      ),
     );
   }
 }
@@ -196,6 +200,7 @@ class ComicTile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(3.0, 3.0, 10.0, 3.0),
                     child: Cover(
+                      imageUrl: comic.image.thumbnailUrl,
                       height: 80.0,
                     ),
                   ),

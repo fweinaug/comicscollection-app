@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:comics_app/models/comic.dart';
 import 'package:comics_app/models/issue.dart';
 import 'package:comics_app/router.dart';
@@ -79,10 +80,11 @@ class Header extends StatelessWidget {
       children: <Widget>[
         Positioned.fill(
           bottom: 15.0,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.black26,
-            ),
+          child: CachedNetworkImage(
+            imageUrl: comic.image.imageUrl,
+            fit: BoxFit.cover,
+            color: Colors.black.withOpacity(0.35),
+            colorBlendMode: BlendMode.overlay,
           ),
         ),
         Align(
@@ -177,7 +179,9 @@ class SingleIssue extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Cover(),
+              Cover(
+                imageUrl: issue.image.thumbnailUrl,
+              ),
               SizedBox(width: 9.0),
               Expanded(
                 child: Column(
@@ -248,6 +252,7 @@ class IssueTile extends StatelessWidget {
                 children: <Widget>[
                   Cover(
                     height: 60.0,
+                    imageUrl: issue.image.thumbnailUrl,
                   ),
                   SizedBox(width: 9.0),
                   Text(
@@ -375,7 +380,7 @@ class Details extends StatelessWidget {
           if (comic.series) SizedBox(height: 10.0),
           if (comic.series) LabeledText(
             label: 'Series:',
-            text: '${comic.issuesCount} / ${comic.issuesTotal}',
+            text: '${comic.issuesCount} / ${comic.issuesTotal > 0 ? comic.issuesTotal : '?'}',
             extra: comic.concluded ? 'concluded' : 'ongoing',
           ),
           SizedBox(height: 10.0),
