@@ -7,6 +7,7 @@ import 'package:comics_app/widgets/overlay.dart';
 import 'package:comics_app/widgets/summary.dart';
 import 'package:comics_app/widgets/text.dart';
 import 'package:flutter/material.dart' hide CloseButton;
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class IssueOverlay extends StatelessWidget {
   const IssueOverlay(
@@ -79,7 +80,9 @@ class IssueOverlay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Line(),
-                Summary(issue.summary),
+                Observer(
+                  builder: (context) => Summary(issue.summary),
+                ),
                 SizedBox(height: 15.0),
                 Row(
                   children: <Widget>[

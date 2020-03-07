@@ -66,4 +66,17 @@ abstract class _ComicStoreBase with Store {
       comic.markIssueAsUnread(issue);
     }
   }
+
+  @action
+  Future<bool> updateIssue(Issue issue, String summary) async {
+    final updated = await webService.updateIssue(issue, summary);
+
+    if (updated) {
+      issue.summary = summary;
+
+      return true;
+    }
+
+    return false;
+  }
 }

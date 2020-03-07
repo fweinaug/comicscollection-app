@@ -217,7 +217,9 @@ class SingleIssue extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Line(),
-              Summary(issue.summary),
+              Observer(
+                builder: (context) => Summary(issue.summary),
+              ),
               SizedBox(height: 25.0),
             ],
           ),
