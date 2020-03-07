@@ -198,11 +198,10 @@ class ComicTile extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Wrap(
             children: <Widget>[
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(3.0, 3.0, 10.0, 3.0),
@@ -211,51 +210,53 @@ class ComicTile extends StatelessWidget {
                       height: 80.0,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        comic.name,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 2.0,
-                      ),
-                      if (comic.creators != null && comic.creators.isNotEmpty) Text(
-                        comic.creators.first.person.name,
-                        style: TextStyle(
-                          fontSize: 12.0,
-                        ),
-                      ),
-                      Text(
-                        comic.publisher.name,
-                        style: TextStyle(
-                          fontSize: 12.0,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 14.0,
-                      ),
-                      Observer(
-                        builder: (_) => Text(
-                          '${comic.issuesRead} / ${comic.issuesCount}',
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          comic.name,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 10.0,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 2.0,
+                        ),
+                        if (comic.creators != null && comic.creators.isNotEmpty) Text(
+                          comic.creators.first.person.name,
+                          style: TextStyle(
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        Text(
+                          comic.publisher.name,
+                          style: TextStyle(
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 14.0,
+                        ),
+                        Observer(
+                          builder: (_) => Text(
+                            '${comic.issuesRead} / ${comic.issuesCount}',
+                            style: TextStyle(
+                              fontSize: 10.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ComicProgress(
+                    comic: comic,
+                    width: 5.0,
+                    height: 86.0,
                   ),
                 ],
-              ),
-              ComicProgress(
-                comic: comic,
-                width: 5.0,
-                height: 86.0,
               ),
             ],
           ),
