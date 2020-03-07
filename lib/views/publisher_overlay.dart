@@ -33,10 +33,14 @@ class PublisherOverlay extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: 80.0,
-                      height: 35.0,
-                      color: Colors.black12,
+                    Text(
+                      publisher.name.toUpperCase(),
+                      style: TextStyle(
+                        fontFamily: 'Helvetica Neue Condensed',
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.4,
+                      ),
                     ),
                     Line(),
                     Text(
