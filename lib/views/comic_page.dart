@@ -10,6 +10,7 @@ import 'package:comics_app/widgets/summary.dart';
 import 'package:comics_app/widgets/text.dart';
 import 'package:flutter/material.dart' hide Card, BackButton;
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ComicPage extends StatelessWidget {
@@ -388,12 +389,14 @@ class Details extends StatelessWidget {
           SizedBox(height: 10.0),
           LabeledText(
             label: comic.series ? 'Years:' : 'Released:',
-            text: comic.series ? '2014 – 2018' : 'May 6, 2015',
+            text: comic.series
+              ? comic.years ?? '–'
+              : comic.releaseDate != null ? DateFormat.yMMMMd().format(comic.releaseDate) : '–',
           ),
           SizedBox(height: 10.0),
           LabeledText(
             label: 'Added:',
-            text: 'April 12, 2018',
+            text: DateFormat.yMMMMd().format(comic.createdAt),
           ),
         ],
       ),

@@ -8,6 +8,7 @@ import 'package:comics_app/widgets/summary.dart';
 import 'package:comics_app/widgets/text.dart';
 import 'package:flutter/material.dart' hide CloseButton;
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 
 class IssueOverlay extends StatelessWidget {
   const IssueOverlay(
@@ -89,13 +90,13 @@ class IssueOverlay extends StatelessWidget {
                     Expanded(
                       child: LabeledText(
                         label: 'Released:',
-                        text: 'May 6, 2015',
+                        text: issue.releaseDate != null ? DateFormat.yMMMMd().format(issue.releaseDate) : '–',
                       ),
                     ),
                     Expanded(
                       child: LabeledText(
                         label: 'Added:',
-                        text: 'April 18, 2018',
+                        text: DateFormat.yMMMMd().format(issue.createdAt),
                       ),
                     ),
                   ],

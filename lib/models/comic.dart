@@ -33,6 +33,31 @@ abstract class _Comic with Store {
 
   bool get series => issuesCount > 1 || issuesTotal > 1 || !concluded;
 
+  DateTime get releaseDate => series ? null : issues.first.releaseDate;
+
+  String get years {
+    if (series) {
+      final completed = concluded && issuesCount == issuesTotal;
+
+      final firstYear = issues.first.releaseDate?.year;
+      final lastYear = completed ? issues.last.releaseDate?.year : null;
+
+      if (firstYear == null) {
+        return lastYear != null ? '? – $lastYear' : null;
+      } else if (lastYear == null) {
+        return '$firstYear – ?';
+      } else if (firstYear != lastYear) {
+        return '$firstYear – $lastYear';
+      } else {
+        return firstYear.toString();
+      }
+    } else if (issues.first.releaseDate != null) {
+      return issues.first.releaseDate.year.toString();
+    } else {
+      return null;
+    }
+  }
+
   @computed
   bool get finished => issuesRead == issuesCount;
 

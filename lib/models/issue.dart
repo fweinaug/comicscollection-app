@@ -16,7 +16,9 @@ abstract class _Issue with Store {
   int number;
   String title;
   Image image;
-  String releaseDate;
+
+  @JsonKey(nullable: true)
+  DateTime releaseDate;
 
   @observable
   String summary;
