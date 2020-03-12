@@ -29,6 +29,7 @@ class ComicPage extends StatelessWidget {
         body: Stack(
           children: <Widget>[
             SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
               child: Column(
                 children: <Widget>[
                   Header(),

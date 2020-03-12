@@ -13,6 +13,7 @@ class ModalOverlay extends StatelessWidget {
     return Wrap(
       children: <Widget>[
         Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
