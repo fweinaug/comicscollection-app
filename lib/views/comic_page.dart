@@ -337,7 +337,7 @@ class Creators extends StatelessWidget {
             ),
           ),
           Text(
-            creator.contribution,
+            creator.contribution.join(', '),
             style: TextStyle(
               fontSize: 12.0,
               fontWeight: FontWeight.w200,

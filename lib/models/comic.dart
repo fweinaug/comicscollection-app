@@ -85,7 +85,7 @@ abstract class _Comic with Store {
 @JsonSerializable(nullable: false, fieldRename: FieldRename.snake, createToJson: false)
 class Creator {
   final Person person;
-  final String contribution;
+  final List<String> contribution;
 
   Creator({
     this.person,
