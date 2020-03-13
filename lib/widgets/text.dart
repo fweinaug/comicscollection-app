@@ -6,6 +6,7 @@ class LabeledText extends StatelessWidget {
     @required this.label,
     @required this.text,
     this.extra,
+    this.textColor,
     this.onTap,
   }) : assert(label != null),
        assert(text != null),
@@ -14,6 +15,7 @@ class LabeledText extends StatelessWidget {
   final String label;
   final String text;
   final String extra;
+  final Color textColor;
   final VoidCallback onTap;
 
   @override
@@ -43,6 +45,7 @@ class LabeledText extends StatelessWidget {
           style: TextStyle(
             fontSize: 14.0,
             fontWeight: FontWeight.w500,
+            color: textColor,
             decoration: onTap != null ? TextDecoration.underline : null,
           ),
         ),

@@ -241,10 +241,34 @@ class ComicTile extends StatelessWidget {
                           height: 14.0,
                         ),
                         Observer(
-                          builder: (_) => Text(
-                            '${comic.issuesRead} / ${comic.issuesCount}',
-                            style: TextStyle(
-                              fontSize: 10.0,
+                          builder: (_) => Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '${comic.issuesRead} / ${comic.issuesCount}',
+                                  style: TextStyle(
+                                    fontSize: 10.0,
+                                  ),
+                                ),
+                                if (comic.incomplete) TextSpan(
+                                  text: ' (${comic.issuesTotal}${comic.concluded ? '' : '+'})',
+                                  style: TextStyle(
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w200,
+                                    color: Color(0xFF8C2B23),
+                                    letterSpacing: 1.0,
+                                  ),
+                                ),
+                                if (!comic.concluded && !comic.incomplete) TextSpan(
+                                  text: ' (+)',
+                                  style: TextStyle(
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w200,
+                                    color: Color(0xFF676767),
+                                    letterSpacing: 0.7,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

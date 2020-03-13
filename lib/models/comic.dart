@@ -32,6 +32,7 @@ abstract class _Comic with Store {
   DateTime updatedAt;
 
   bool get series => issuesCount > 1 || issuesTotal > 1 || !concluded;
+  bool get incomplete => issuesTotal > 0 && issuesTotal != issuesCount;
 
   DateTime get releaseDate => series ? null : issues.first.releaseDate;
 
