@@ -385,6 +385,7 @@ class Details extends StatelessWidget {
           if (comic.series) LabeledText(
             label: 'Series:',
             text: '${comic.issuesCount} / ${comic.issuesTotal > 0 ? comic.issuesTotal : '?'}',
+            textColor: comic.incomplete ? Color(0xFF8C2B23) : null,
             extra: comic.concluded ? 'concluded' : 'ongoing',
           ),
           SizedBox(height: 10.0),
