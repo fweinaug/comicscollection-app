@@ -1,5 +1,4 @@
 import 'package:comics_app/router.dart';
-import 'package:comics_app/services/web_service.dart';
 import 'package:comics_app/stores/comic_store.dart';
 import 'package:comics_app/views/main_page.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +13,8 @@ class ComicApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<WebService>(
-          create: (_) => WebService(),
-        ),
-        ProxyProvider<WebService, ComicStore>(
-          update: (_, webService, __) => ComicStore(webService),
+        Provider<ComicStore>(
+          create: (_) => ComicStore(),
         ),
       ],
       child: MaterialApp(

@@ -8,7 +8,7 @@ part 'comic_store.g.dart';
 class ComicStore = _ComicStoreBase with _$ComicStore;
 
 abstract class _ComicStoreBase with Store {
-  final WebService webService;
+  final WebService webService = WebService();
 
   ObservableList<Comic> comics = ObservableList<Comic>();
 
@@ -20,7 +20,7 @@ abstract class _ComicStoreBase with Store {
 
   ObservableFuture _initializeFuture;
 
-  _ComicStoreBase(this.webService) {
+  _ComicStoreBase() {
     _initializeFuture = ObservableFuture(initialize());
   }
 
