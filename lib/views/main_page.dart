@@ -208,6 +208,7 @@ class ComicTile extends StatelessWidget {
                     child: Cover(
                       imageUrl: comic.image.thumbnailUrl,
                       height: 80.0,
+                      title: comic.name,
                     ),
                   ),
                   Expanded(
@@ -253,7 +254,7 @@ class ComicTile extends StatelessWidget {
                                 if (comic.incomplete) TextSpan(
                                   text: ' (${comic.issuesTotal}${comic.concluded ? '' : '+'})',
                                   style: TextStyle(
-                                    fontSize: 8.0,
+                                    fontSize: 9.0,
                                     fontWeight: FontWeight.w200,
                                     color: Color(0xFF8C2B23),
                                     letterSpacing: 1.0,
@@ -262,7 +263,7 @@ class ComicTile extends StatelessWidget {
                                 if (!comic.concluded && !comic.incomplete) TextSpan(
                                   text: ' (+)',
                                   style: TextStyle(
-                                    fontSize: 8.0,
+                                    fontSize: 9.0,
                                     fontWeight: FontWeight.w200,
                                     color: Color(0xFF676767),
                                     letterSpacing: 0.7,
