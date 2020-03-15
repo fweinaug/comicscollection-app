@@ -205,10 +205,42 @@ class ComicTile extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(3.0, 3.0, 10.0, 3.0),
-                    child: Cover(
-                      imageUrl: comic.image.thumbnailUrl,
-                      height: 80.0,
-                      title: comic.name,
+                    child: Stack(
+                      children: <Widget>[
+                        Cover(
+                          imageUrl: comic.image.thumbnailUrl,
+                          height: 80.0,
+                          title: comic.name,
+                        ),
+                        if (comic.series) Positioned(
+                          right: 0.0,
+                          bottom: 0.0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(3.0),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  offset: Offset.zero,
+                                  blurRadius: 3.0,
+                                  spreadRadius: 0.0,
+                                  color: Colors.black.withOpacity(0.3),
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(2.0),
+                            child: Text(
+                              'Series',
+                              style: TextStyle(
+                                fontSize: 9.0,
+                                fontWeight: FontWeight.w200,
+                                color: Colors.white,
+                                letterSpacing: 0.2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
