@@ -68,7 +68,35 @@ class ReadButton extends StatefulWidget {
   _ReadButtonState createState() => _ReadButtonState();
 }
 
-class _ReadButtonState extends State<ReadButton> {
+class _ReadButtonState extends State<ReadButton> with TickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<double> _animation;
+
+  bool _pressed = false;
+
+  initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      reverseDuration: Duration(milliseconds: 0),
+      value: 1.0,
+      vsync: this,
+    )..addStatusListener((status) {
+      if (status == AnimationStatus.dismissed && !_pressed) {
+        _controller.forward();
+      }
+    });
+
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.elasticOut);
+  }
+
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -78,18 +106,40 @@ class _ReadButtonState extends State<ReadButton> {
         shape: CircleBorder(),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: () {
-            final store = Provider.of<ComicStore>(context, listen: false);
+          highlightColor: Color(0xFF3AB88B),
+          onTapDown: (_) {
+            _pressed = true;
 
-            store.toggleRead(widget.issue);
+            if (!widget.issue.read) {
+              _controller.reverse();
+            }
+          },
+          onTapCancel: () {
+            _pressed = false;
+
+            _controller.forward();
+          },
+          onTap: () async {
+            _pressed = false;
+
+            final store = Provider.of<ComicStore>(context, listen: false);
+            await store.toggleRead(widget.issue);
+
+            if (_controller.status == AnimationStatus.dismissed) {
+              _controller.forward();
+            }
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(10.0, 11.0, 10.0, 9.0),
-            child: SvgPicture.asset(
-              'assets/icons/check.svg',
-              width: 15.0,
-              height: 15.0,
-              color: Color(widget.issue.read ? 0xFFFFFFFF : 0xFF3AB88B),
+            child: ScaleTransition(
+              scale: _animation,
+              alignment: Alignment.center,
+              child: SvgPicture.asset(
+                'assets/icons/check.svg',
+                width: 15.0,
+                height: 15.0,
+                color: Color(widget.issue.read ? 0xFFFFFFFF : 0xFF3AB88B),
+              ),
             ),
           ),
         ),
