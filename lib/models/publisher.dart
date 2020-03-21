@@ -7,8 +7,10 @@ part 'publisher.g.dart';
 class Publisher {
   final int id;
   final String name;
+  final String shortName;
   @JsonKey(nullable: true)
   final Image image;
+  final int founded;
   final String description;
   final String website;
   final DateTime createdAt;
@@ -19,7 +21,9 @@ class Publisher {
   Publisher({
     this.id,
     this.name,
+    this.shortName,
     this.image,
+    this.founded,
     this.description,
     this.website,
     this.createdAt,

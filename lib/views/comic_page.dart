@@ -378,7 +378,7 @@ class Details extends StatelessWidget {
           Line(),
           LabeledText(
             label: 'Publisher:',
-            text: comic.publisher.name,
+            text: comic.publisher.shortName,
             onTap: () => Router.showPublisher(comic.publisher),
           ),
           if (comic.series) SizedBox(height: 10.0),

@@ -54,6 +54,14 @@ class PublisherOverlay extends StatelessWidget {
                       height: 16.0,
                     ),
                     LabeledText(
+                      label: 'Founded:',
+                      text: '${publisher.founded}',
+                      extra: '${DateTime.now().year - publisher.founded} years ago',
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    LabeledText(
                       label: 'Website:',
                       text: publisher.websiteDomain,
                       onTap: () => _launchUrl(publisher.website),

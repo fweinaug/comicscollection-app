@@ -265,7 +265,7 @@ class ComicTile extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          comic.publisher.name,
+                          comic.publisher.shortName,
                           style: TextStyle(
                             fontSize: 12.0,
                           ),
