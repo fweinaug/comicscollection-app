@@ -35,7 +35,7 @@ class LabeledText extends StatelessWidget {
     );
   }
 
-  _buildText() {
+  Widget _buildText() {
     final child = Wrap(
       spacing: 5.0,
       crossAxisAlignment: WrapCrossAlignment.end,

@@ -17,13 +17,13 @@ class Router {
   static bool _issueOpen = false;
 
   static void showComic(Comic comic) {
-    _navigator.push(MaterialPageRoute(
+    _navigator.push<Route>(MaterialPageRoute(
       builder: (_) => ComicPage(comic),
     ));
   }
 
   static void showPublisher(Publisher publisher) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: _navigator.overlay.context,
       builder: (_) => PublisherOverlay(publisher),
       backgroundColor: Colors.transparent,
@@ -34,7 +34,7 @@ class Router {
   static void showIssue(Comic comic, Issue issue) {
     _issueOpen = true;
 
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: _navigator.overlay.context,
       builder: (_) => IssueOverlay(comic, issue),
       backgroundColor: Colors.transparent,

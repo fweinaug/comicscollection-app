@@ -77,7 +77,7 @@ class PublisherOverlay extends StatelessWidget {
   }
 }
 
-_launchUrl(String url) async {
+void _launchUrl(String url) async {
   if (await canLaunch(url)) {
     await launch(url);
   }

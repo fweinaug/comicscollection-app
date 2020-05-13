@@ -308,7 +308,7 @@ class Creators extends StatelessWidget {
     );
   }
 
-  _buildList(List<Creator> creators) {
+  Widget _buildList(List<Creator> creators) {
     if (creators == null || creators.isEmpty) {
       return Expanded(
         child: Center(

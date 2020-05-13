@@ -21,17 +21,17 @@ abstract class _ComicStoreBase with Store {
   ObservableFuture _initializeFuture;
 
   _ComicStoreBase() {
-    _initializeFuture = ObservableFuture(initialize());
+    _initializeFuture = ObservableFuture<void>(initialize());
   }
 
   Future initialize() async {
-    await Future.wait([
+    await Future.wait<void>([
       _loadComics(),
       Future.delayed(Duration(milliseconds: 1000)),
     ]);
   }
 
-  Future _loadComics() async {
+  Future<void> _loadComics() async {
     final loadedComics = await webService.getComics();
 
     comics.addAll(loadedComics);

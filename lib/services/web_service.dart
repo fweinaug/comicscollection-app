@@ -34,14 +34,16 @@ class WebService {
     return response?.response?.statusCode == HttpStatus.ok;
   }
 
-  static _createClient() {
+  static RestClient _createClient() {
     final dio = Dio(BaseOptions(
       baseUrl: _baseUrl,
-      headers: {'ProfileID': _profileId},
+      headers: <String, dynamic>{
+        'ProfileID': _profileId,
+      },
     ));
 
     dio.transformer = FlutterTransformer();
-    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: _baseUrl)).interceptor);
+    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: _baseUrl)).interceptor as Interceptor);
 
     final client = RestClient(dio);
     return client;
