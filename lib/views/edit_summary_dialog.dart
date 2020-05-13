@@ -83,7 +83,7 @@ class _EditSummaryDialogState extends State<EditSummaryDialog> {
                           labelStyle: TextStyle(
                             color: Color(0xFFD6D6D6),
                           ),
-                          hasFloatingPlaceholder: false,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                           alignLabelWithHint: true
                       ),
                     ),
