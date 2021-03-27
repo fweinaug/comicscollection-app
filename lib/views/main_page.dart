@@ -346,7 +346,7 @@ class ComicProgress extends StatelessWidget {
           Ink(
             width: width,
             height: height,
-            color: comic.finished ? Color(0xFF3AB88B).withOpacity(comic.concluded ? 1.0 : 0.5) : Color(0xFFECECEC),
+            color: comic.finished ? Color(0xFF3AB88B).withOpacity(comic.concluded && !comic.incomplete ? 1.0 : 0.5) : Color(0xFFECECEC),
           ),
           if (comic.reading) Positioned(
             bottom: 0.0,
